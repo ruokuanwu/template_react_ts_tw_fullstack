@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.0",
+    "@elysiajs/static": "^1.0.0",
+    "elysia": "^1.0.0",
+    "globals": "^17.7.0",
+    "typescript-eslint": "^8.62.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  }
+}

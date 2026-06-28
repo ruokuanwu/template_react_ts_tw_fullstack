@@ -1,0 +1,9 @@
+# VSCode Extensions Recommendations
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "oven.bun-vscode"
+  ]
+}
