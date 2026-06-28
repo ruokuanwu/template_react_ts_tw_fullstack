@@ -26,10 +26,11 @@ export const usersRoute = new Elysia()
   // Get user by ID
   .get(
     '/users/:id',
-    ({ params: { id }, error }) => {
+    ({ params: { id }, set }) => {
       const user = users.find((u) => u.id === parseInt(id))
       if (!user) {
-        return error(404, { success: false, message: 'User not found' })
+        set.status = 404
+        return { success: false, message: 'User not found' }
       }
       return { success: true, data: user }
     },
@@ -67,10 +68,11 @@ export const usersRoute = new Elysia()
   // Update user
   .put(
     '/users/:id',
-    ({ params: { id }, body, error }) => {
+    ({ params: { id }, body, set }) => {
       const userIndex = users.findIndex((u) => u.id === parseInt(id))
       if (userIndex === -1) {
-        return error(404, { success: false, message: 'User not found' })
+        set.status = 404
+        return { success: false, message: 'User not found' }
       }
       users[userIndex] = { ...users[userIndex], ...body }
       return {
@@ -95,10 +97,11 @@ export const usersRoute = new Elysia()
   // Delete user
   .delete(
     '/users/:id',
-    ({ params: { id }, error }) => {
+    ({ params: { id }, set }) => {
       const userIndex = users.findIndex((u) => u.id === parseInt(id))
       if (userIndex === -1) {
-        return error(404, { success: false, message: 'User not found' })
+        set.status = 404
+        return { success: false, message: 'User not found' }
       }
       const deletedUser = users.splice(userIndex, 1)[0]
       return {
