@@ -6,5 +6,5 @@ export const loggerPlugin = new Elysia({ name: 'logger' })
         logger.info(`${request.method} ${new URL(request.url).pathname}`)
     })
     .onError(({ code, error }) => {
-        logger.error(`Request failed: ${code}`, error)
+        logger.error(`Error ${code}: ${error}`)
     })
