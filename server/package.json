@@ -7,19 +7,26 @@
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
     "build": "bun build src/index.ts --outdir=dist --target=bun",
-    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0"
+    "cli": "bun run src/cli/index.ts",
+    "cron": "bun run src/cron/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "bun run src/db/migrate.ts",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.0.0",
     "@elysiajs/static": "^1.0.0",
+    "drizzle-orm": "^0.45.2",
     "elysia": "^1.0.0",
     "globals": "^17.7.0",
     "typescript-eslint": "^8.62.0"
   },
   "devDependencies": {
+    "@eslint/js": "8.57.1",
     "@types/bun": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5"
   }
