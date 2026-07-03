@@ -2,9 +2,8 @@ import { Outlet, createRootRoute, useRouterState } from '@tanstack/react-router'
 import { Header } from '@/components/layout/header'
 import { Sidebar } from '@/components/layout/sidebar'
 import { APP_NAME } from '@/lib/constants'
-import type { AppRoute } from '@/types'
 
-const routes: AppRoute[] = [
+const routes = [
   { id: 'index', path: '/', label: '首页', file: 'src/routes/index.tsx' },
   { id: 'dashboard', path: '/dashboard', label: '仪表盘', file: 'src/routes/dashboard.tsx' },
   { id: 'login', path: '/login', label: '登录', file: 'src/routes/login.tsx' },

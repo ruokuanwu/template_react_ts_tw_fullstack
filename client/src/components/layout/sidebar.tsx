@@ -1,7 +1,8 @@
-import type { AppRoute } from '../../types/index'
-
 interface SidebarProps {
-  routes: AppRoute[]
+  routes: {
+    path: string
+    file: string
+  }[]
 }
 
 export function Sidebar({ routes }: SidebarProps) {

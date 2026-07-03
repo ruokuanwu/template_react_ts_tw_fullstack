@@ -1,10 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import type { AppRoute } from '../../types/index'
 
 interface HeaderProps {
-  routes: AppRoute[]
+  routes: {
+    path: string
+    label: string
+  }[]
   activePath: string
 }
 
