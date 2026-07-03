@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bun run --parallel dev:*",
+    "dev": "bun run dev:client & bun run dev:server & wait",
     "dev:client": "cd client && bun run dev",
     "dev:server": "cd server && bun run dev",
     "build": "bun run build:client && bun run build:server",
@@ -12,11 +12,14 @@
     "build:server": "cd server && bun run build",
     "preview": "cd client && bun run preview",
     "start": "cd server && bun run start",
-    "lint": "bun run --parallel lint:*",
+    "lint": "bun run lint:client & bun run lint:server & wait",
     "lint:client": "cd client && bun run lint",
     "lint:server": "cd server && bun run lint"
   },
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "devDependencies": {
     "bun-types": "^1.1.0"
   }
