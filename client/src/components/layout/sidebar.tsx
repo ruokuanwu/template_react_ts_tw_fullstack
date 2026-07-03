@@ -11,7 +11,7 @@ export function Sidebar({ routes }: SidebarProps) {
       <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
         {routes.map((route) => (
           <li key={route.path} className="rounded-md bg-muted px-3 py-2">
-            src/pages/{route.id}.tsx
+            {route.file}
           </li>
         ))}
       </ul>

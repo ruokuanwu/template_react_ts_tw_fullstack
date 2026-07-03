@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import type { AppRoute } from '../../types/index'
@@ -5,10 +6,9 @@ import type { AppRoute } from '../../types/index'
 interface HeaderProps {
   routes: AppRoute[]
   activePath: string
-  onNavigate: (path: string) => void
 }
 
-export function Header({ routes, activePath, onNavigate }: HeaderProps) {
+export function Header({ routes, activePath }: HeaderProps) {
   return (
     <header className="sticky top-0 z-10 border-b border-border bg-white/90 backdrop-blur">
       <div className="container mx-auto flex min-h-16 items-center justify-between gap-6 px-4">
@@ -21,12 +21,12 @@ export function Header({ routes, activePath, onNavigate }: HeaderProps) {
           {routes.map((route) => (
             <Button
               key={route.path}
+              asChild
               variant={activePath === route.path ? 'default' : 'ghost'}
               size="sm"
               className={cn(activePath === route.path && 'shadow-sm')}
-              onClick={() => onNavigate(route.path)}
             >
-              {route.label}
+              <Link to={route.path}>{route.label}</Link>
             </Button>
           ))}
         </nav>
