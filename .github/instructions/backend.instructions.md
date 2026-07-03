@@ -22,7 +22,7 @@ src/
   index.ts            # 入口：创建并启动 app，监听端口
   app.ts              # 组装 Elysia 实例（挂载插件、分组路由）
   config/
-    env.ts            # 集中读取环境变量，导出 env 对象
+    config.ts         # 集中读取环境变量，导出 CONFIG 对象
   db/
     index.ts          # 初始化 drizzle 实例，导出 db
     schema.ts         # Drizzle 表定义
@@ -83,8 +83,8 @@ src/
 
 ## 配置与环境变量
 
-- 所有环境变量只在 `config/env.ts` 集中读取（用 `Bun.env`），业务代码从 `env` 对象取值，不直接读 `Bun.env` / `process.env`。
-- 新增变量在 `env.ts` 登记并提供默认值，同时更新 `.env.example`。
+- 所有环境变量只在 `config/config.ts` 集中读取（用 `Bun.env`），业务代码从 `CONFIG` 对象取值，不直接读 `Bun.env` / `process.env`。
+- 新增变量在 `config.ts` 登记并提供默认值，同时更新 `.env.example`。
 
 ## 日志
 

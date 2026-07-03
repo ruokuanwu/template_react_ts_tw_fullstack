@@ -31,7 +31,7 @@ src/
   routes/        # TanStack 文件路由页面
   hooks/         # 跨领域通用 hooks
   lib/           # 通用工具（api、utils、constants）
-  config/        # 应用配置（集中导出 APP_CONFIG）
+  config/        # 应用配置（集中导出 CONFIG）
   assets/        # 静态资源（icons、images）
 ```
 
@@ -57,7 +57,7 @@ src/
 
 ## 配置与环境变量
 
-- 运行时配置只从 `@/config` 的 `APP_CONFIG` 读取，不要在业务代码里直接读 `import.meta.env`
+- 运行时配置只从 `@/config` 的 `CONFIG` 读取，不要在业务代码里直接读 `import.meta.env`
 - 新增环境变量须加 `VITE_` 前缀，并在 `config/index.ts` 的 Zod schema 中登记与提供默认值
 
 ## 数据请求

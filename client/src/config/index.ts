@@ -20,7 +20,7 @@ if (!parsed.success) {
  * 应用级配置。
  * 集中导出运行时环境变量与全局静态常量，全应用只暴露这一个配置对象。
  */
-export const APP_CONFIG = {
+export const CONFIG = {
   name: parsed.data.VITE_APP_NAME,
   apiBaseUrl: parsed.data.VITE_API_BASE_URL,
   isDev: import.meta.env.DEV,
