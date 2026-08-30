@@ -1,6 +1,6 @@
-import { Elysia } from 'elysia'
-import { authService } from './auth.service'
+import { Elysia } from "elysia";
+import { authService } from "./service";
 
-export const authModule = new Elysia({ name: 'auth-module' }).mount(
-    authService.handler,
-)
+export const authModule = new Elysia({ name: "auth-module" }).mount(
+  authService.handler,
+);
