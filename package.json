@@ -36,8 +36,6 @@
     "@eslint/js": "8.57.1",
     "@types/bun": "^1.1.0",
     "@types/node": "^26.4.0",
-    "@typescript-eslint/eslint-plugin": "^7.11.0",
-    "@typescript-eslint/parser": "^7.11.0",
     "drizzle-kit": "^0.31.10",
     "eslint": "^8.57.0",
     "globals": "^17.7.0",
