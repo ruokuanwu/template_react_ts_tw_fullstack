@@ -19,7 +19,6 @@
     "noFallthroughCasesInSwitch": true,
     /* Module Resolution Options */
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     /* Advanced Options */
@@ -31,6 +30,7 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "src/web"
   ]
 }
