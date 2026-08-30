@@ -1,11 +1,20 @@
-export interface LoginPayload {
-  email: string
-  password: string
+import { authClient } from "@/lib/auth-client";
+
+export interface SignInPayload {
+  email: string;
+  password: string;
 }
 
-export async function login(payload: LoginPayload) {
-  return Promise.resolve({
-    token: 'demo-token',
-    email: payload.email,
-  })
+export interface SignUpPayload extends SignInPayload {
+  name: string;
 }
+
+export const signIn = (payload: SignInPayload) =>
+  authClient.signIn.email(payload);
+
+export const signUp = (payload: SignUpPayload) =>
+  authClient.signUp.email(payload);
+
+export const signOut = () => authClient.signOut();
+
+export const getSession = () => authClient.getSession();
