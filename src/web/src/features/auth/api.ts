@@ -1,20 +1,20 @@
-import { authClient } from "@/lib/authClient";
+import { authClient } from './client'
 
 export interface SignInPayload {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export interface SignUpPayload extends SignInPayload {
-  name: string;
+  name: string
 }
 
 export const signIn = (payload: SignInPayload) =>
-  authClient.signIn.email(payload);
+  authClient.signIn.email(payload)
 
 export const signUp = (payload: SignUpPayload) =>
-  authClient.signUp.email(payload);
+  authClient.signUp.email(payload)
 
-export const signOut = () => authClient.signOut();
+export const signOut = () => authClient.signOut()
 
-export const getSession = () => authClient.getSession();
+export const getSession = () => authClient.getSession()

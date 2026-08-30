@@ -1,8 +1,8 @@
 interface SidebarProps {
-  routes: {
-    path: string
-    file: string
-  }[]
+  routes: readonly {
+    path: string;
+    file: string;
+  }[];
 }
 
 export function Sidebar({ routes }: SidebarProps) {
@@ -17,5 +17,5 @@ export function Sidebar({ routes }: SidebarProps) {
         ))}
       </ul>
     </aside>
-  )
+  );
 }

@@ -26,3 +26,14 @@ export const config = {
   isDev: import.meta.env.DEV,
   isProd: import.meta.env.PROD,
 } as const;
+
+export const navigationItems = [
+  { id: "index", path: "/", label: "首页", file: "src/routes/index.tsx" },
+  {
+    id: "dashboard",
+    path: "/dashboard",
+    label: "仪表盘",
+    file: "src/routes/dashboard.tsx",
+  },
+  { id: "login", path: "/login", label: "登录", file: "src/routes/login.tsx" },
+] as const;

@@ -4,7 +4,7 @@ import { AuthStatus } from "@/features/auth/components/auth-status";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
-  routes: {
+  routes: readonly {
     path: string;
     label: string;
   }[];
