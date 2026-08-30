@@ -7,7 +7,7 @@
     ],
     "moduleResolution": "bundler",
     "types": [
-      "bun-types",
+      "bun",
       "node"
     ],
     "skipLibCheck": true,
