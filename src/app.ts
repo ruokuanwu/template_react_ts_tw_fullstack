@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { staticPlugin } from "@elysiajs/static";
-import { authModule } from "./modules/auth";
-import { helloRoute } from "./modules/hello";
+import { authModule } from "./features/auth";
+import { helloRoute } from "./features/hello";
 import { corsPlugin } from "./plugins/cors";
 import { dbPlugin } from "./plugins/db";
 import { loggerPlugin } from "./plugins/logger";

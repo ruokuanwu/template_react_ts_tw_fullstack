@@ -5,8 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
-import { navigationItems } from "@/config";
-import { APP_NAME } from "@/lib/constants";
+import { APP_NAME, NAVIGATION_ITEMS } from "@/lib/constants";
 
 function RootLayout() {
   const pathname = useRouterState({
@@ -15,10 +14,10 @@ function RootLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Header routes={navigationItems} activePath={pathname} />
+      <Header routes={NAVIGATION_ITEMS} activePath={pathname} />
 
       <div className="container mx-auto grid gap-6 px-4 py-8 lg:grid-cols-[260px_1fr]">
-        <Sidebar routes={navigationItems} />
+        <Sidebar routes={NAVIGATION_ITEMS} />
 
         <main className="min-w-0">
           <div className="mb-6 rounded-xl border border-border bg-white p-4 text-sm text-muted-foreground shadow-sm">
