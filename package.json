@@ -3,24 +3,45 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "bun run dev:client & bun run dev:server & wait",
-    "dev:client": "cd client && bun run dev",
-    "dev:server": "cd server && bun run dev",
-    "build": "bun run build:client && bun run build:server",
-    "build:client": "cd client && bun run build",
-    "build:server": "cd server && bun run build",
-    "preview": "cd client && bun run preview",
-    "start": "cd server && bun run start",
-    "lint": "bun run lint:client & bun run lint:server & wait",
-    "lint:client": "cd client && bun run lint",
-    "lint:server": "cd server && bun run lint"
-  },
+  "packageManager": "bun@1.2.21",
   "workspaces": [
-    "client",
-    "server"
+    "src/web"
   ],
+  "scripts": {
+    "dev": "bun run --parallel 'dev:*'",
+    "dev:server": "bun run --watch src/index.ts",
+    "dev:web": "bun run --filter @template/web dev",
+    "start": "bun run src/index.ts",
+    "build": "bun run build:server && bun run build:web",
+    "build:server": "bun build src/index.ts --outdir=dist --target=bun",
+    "build:web": "bun run --filter @template/web build",
+    "cli": "bun run src/cli/index.ts",
+    "cron": "bun run src/cron/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "bun run src/db/migrate.ts",
+    "lint": "bun run lint:server && bun run lint:web",
+    "lint:server": "eslint src drizzle.config.ts --report-unused-disable-directives --max-warnings 0",
+    "lint:web": "bun run --filter @template/web lint"
+  },
+  "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.7.2",
+    "@elysiajs/cors": "^1.0.0",
+    "@elysiajs/static": "^1.0.0",
+    "better-auth": "^1.7.2",
+    "drizzle-orm": "^0.45.2",
+    "elysia": "^1.0.0",
+    "pino": "^10.3.1"
+  },
   "devDependencies": {
-    "bun-types": "^1.1.0"
+    "@eslint/js": "8.57.1",
+    "@types/bun": "^1.1.0",
+    "@types/node": "^26.4.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^8.57.0",
+    "globals": "^17.7.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.62.0"
   }
 }
