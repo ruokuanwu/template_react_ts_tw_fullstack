@@ -10,7 +10,7 @@ export const authService = betterAuth({
   secret: config.authSecret,
   trustedOrigins: [config.clientUrl],
   database: drizzleAdapter(db, {
-    provider: "pg",
+    provider: "sqlite",
     schema,
   }),
   emailAndPassword: {

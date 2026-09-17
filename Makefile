@@ -31,6 +31,9 @@ lint:
 start:
 	bun run start
 
+db-generate:
+	bun run db:generate
+
 db-migrate:
 	bun run db:migrate
 
