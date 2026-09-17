@@ -1,10 +1,17 @@
 import { Elysia } from 'elysia'
 import { logger } from '../lib/logger'
+import { requestIdPlugin } from './request-id'
 
 export const loggerPlugin = new Elysia({ name: 'logger' })
-    .onRequest(({ request }) => {
-        logger.info(`${request.method} ${new URL(request.url).pathname}`)
+    .use(requestIdPlugin)
+    .derive(({ requestId }) => ({
+        reqLogger: logger.child({ requestId }),
+    }))
+    .onBeforeHandle(({ request, reqLogger }) => {
+        reqLogger.info(`${request.method} ${new URL(request.url).pathname}`)
     })
-    .onError(({ code, error }) => {
-        logger.error(`Error ${code}: ${error}`)
+    .onError(({ code, error, reqLogger }) => {
+        const errorLogger = reqLogger ?? logger
+        errorLogger.error(`Error ${code}: ${error}`)
     })
+    .as('global')
