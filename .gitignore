@@ -38,3 +38,5 @@ build
 
 # Bun
 bun.lockb
+
+*.db
