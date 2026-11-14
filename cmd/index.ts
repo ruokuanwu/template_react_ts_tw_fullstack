@@ -30,11 +30,6 @@ export const runCli = async (args: string[]) => {
             await migrateCommand()
             break
         }
-        case 'cron': {
-            const { cronCommand } = await import('./commands/cron')
-            await cronCommand(commandArgs)
-            break
-        }
         default:
             throw new Error(`Unknown command: ${command}\n${help}`)
     }
