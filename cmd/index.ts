@@ -1,4 +1,4 @@
-import { logger } from '../internal/pkg/logger'
+import { Logger } from '../internal/pkg/logger'
 
 const help = `Usage: bun run cli <command>
 
@@ -39,7 +39,7 @@ if (import.meta.main) {
     try {
         await runCli(Bun.argv.slice(2))
     } catch (error) {
-        logger.error({ err: error }, 'Command failed')
+        Logger.error({ err: error }, 'Command failed')
         process.exitCode = 1
     }
 }

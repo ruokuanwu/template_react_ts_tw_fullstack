@@ -2,19 +2,19 @@ import { describe, expect, test } from 'bun:test'
 import { Elysia } from 'elysia'
 import { contextMiddleware } from './context'
 import { helloModule } from '../module/hello'
-import type { RequestContext } from '../pkg/request-context'
+import type { Context } from '../pkg/context'
 
 describe('contextMiddleware', () => {
     test('isolates contexts and loggers across concurrent requests', async () => {
-        const contexts: RequestContext[] = []
-        const readRequestId = async (ctx: RequestContext) => {
+        const contexts: Context[] = []
+        const readRequestId = async (ctx: Context) => {
             contexts.push(ctx)
             await Bun.sleep(1)
             return ctx.logger.bindings().requestId
         }
         const app = new Elysia()
             .use(contextMiddleware)
-            .get('/context', async ({ ctx, reqLogger }) => ({
+            .get('/context', async ({ ctx, logger: reqLogger }) => ({
                 requestId: await readRequestId(ctx),
                 sameLogger: ctx.logger === reqLogger,
             }))

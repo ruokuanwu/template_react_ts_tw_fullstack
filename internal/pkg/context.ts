@@ -1,5 +1,5 @@
 import type { Logger } from 'pino'
 
-export interface RequestContext {
+export interface Context {
     logger: Logger
 }

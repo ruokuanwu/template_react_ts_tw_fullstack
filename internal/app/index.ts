@@ -6,7 +6,7 @@ import { dbMiddleware } from "../middleware/db";
 import { contextMiddleware } from "../middleware/context";
 import { config } from '../config'
 import { client } from '../db'
-import { logger } from '../pkg/logger'
+import { Logger } from '../pkg/logger'
 
 const webDistPath = `${process.cwd()}/dist/web`;
 const webIndexPath = `${webDistPath}/index.html`;
@@ -43,7 +43,7 @@ export const runApp = () => {
 
     try {
       await app.stop()
-      logger.info('Elysia server stopped')
+      Logger.info('Elysia server stopped')
     } finally {
       client.close()
     }
@@ -51,14 +51,14 @@ export const runApp = () => {
 
   const onSignal = () => {
     void stop().catch((error: unknown) => {
-      logger.error({ err: error }, 'Failed to stop application')
+      Logger.error({ err: error }, 'Failed to stop application')
       process.exitCode = 1
     })
   }
 
   process.once('SIGINT', onSignal)
   process.once('SIGTERM', onSignal)
-  logger.info(`Elysia server is running at ${app.server?.hostname}:${app.server?.port}`)
+  Logger.info(`Elysia server is running at ${app.server?.hostname}:${app.server?.port}`)
 
   return { app, stop }
 }
