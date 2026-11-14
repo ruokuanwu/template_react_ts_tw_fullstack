@@ -4,7 +4,7 @@ import { authModule } from "../module/auth";
 import { helloModule } from "../module/hello";
 import { corsMiddleware } from "../middleware/cors";
 import { dbMiddleware } from "../middleware/db";
-import { loggerMiddleware } from "../middleware/logger";
+import { contextMiddleware } from "../middleware/context";
 import { config } from '../config'
 import { client } from '../db'
 import { logger } from '../pkg/logger'
@@ -17,7 +17,7 @@ export const createApp = () =>
     .group("/api", (app) =>
       app
         .use(corsMiddleware)
-        .use(loggerMiddleware)
+        .use(contextMiddleware)
         .use(dbMiddleware)
         .use(authModule)
         .use(helloModule),
