@@ -1,6 +1,6 @@
 import { createApp } from "./app";
 import { config } from "./config";
-import { logger } from "./lib/logger";
+import { logger } from "./pkg/logger";
 
 const app = createApp().listen(config.port);
 

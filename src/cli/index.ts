@@ -1,4 +1,4 @@
-import { logger } from '../lib/logger'
+import { logger } from '../pkg/logger'
 
 const command = Bun.argv[2]
 

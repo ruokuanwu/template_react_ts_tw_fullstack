@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia'
-import type { RequestContext } from '../../lib/request-context'
+import type { RequestContext } from '../../pkg/request-context'
 import { loggerPlugin } from '../../plugins/logger'
 
 export const helloRoute = new Elysia()

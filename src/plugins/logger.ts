@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia'
-import { logger } from '../lib/logger'
+import { logger } from '../pkg/logger'
 import { requestIdPlugin } from './request-id'
 
 export const loggerPlugin = new Elysia({ name: 'logger' })
