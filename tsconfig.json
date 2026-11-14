@@ -25,12 +25,13 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src/**/*",
+    "cmd/**/*.ts",
+    "internal/**/*.ts",
     "drizzle.config.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "src/web"
+    "web"
   ]
 }

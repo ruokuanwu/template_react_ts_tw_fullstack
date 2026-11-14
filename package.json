@@ -5,22 +5,22 @@
   "type": "module",
   "packageManager": "bun@1.2.21",
   "workspaces": [
-    "src/web"
+    "web"
   ],
   "scripts": {
     "dev": "bun run --parallel 'dev:*'",
-    "dev:server": "bun run --watch src/index.ts",
+    "dev:server": "bun run --watch cmd/index.ts serve",
     "dev:web": "bun run --filter @template/web dev",
-    "start": "bun run src/index.ts",
+    "start": "bun run cmd/index.ts serve",
     "build": "bun run build:web && bun run build:server",
-    "build:server": "bun build src/index.ts --outdir=dist --target=bun",
+    "build:server": "bun build cmd/index.ts --outdir=dist --target=bun",
     "build:web": "bun run --filter @template/web build",
-    "cli": "bun run src/cli/index.ts",
-    "cron": "bun run src/cron/index.ts",
+    "cli": "bun run cmd/index.ts",
+    "cron": "bun run cmd/index.ts cron",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "bun run src/db/migrate.ts",
+    "db:migrate": "bun run cmd/index.ts migrate",
     "lint": "bun run lint:server && bun run lint:web",
-    "lint:server": "eslint src drizzle.config.ts --report-unused-disable-directives --max-warnings 0",
+    "lint:server": "eslint cmd internal drizzle.config.ts --report-unused-disable-directives --max-warnings 0",
     "lint:web": "bun run --filter @template/web lint"
   },
   "dependencies": {

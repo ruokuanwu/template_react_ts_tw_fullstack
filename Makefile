@@ -1,4 +1,4 @@
-.PHONY: help install dev build lint start db-migrate docker-build docker-up docker-down docker-logs clean
+.PHONY: help install dev build lint start cli cron db-generate db-migrate docker-build docker-up docker-down docker-logs clean
 
 COMPOSE := docker compose -f deploy/dev/docker-compose.yml
 
@@ -8,7 +8,9 @@ help:
 		'dev           Start backend and frontend in development mode' \
 		'build         Build backend and frontend' \
 		'lint          Run all linters' \
-		'start         Start the application locally' \
+		'start         Start the HTTP server (CLI: serve)' \
+		'cli           Show CLI help (bun run cli <command>)' \
+		'cron          Run cleanup (bun run cron <job>)' \
 		'db-migrate    Run database migrations' \
 		'docker-build  Build the development Docker image' \
 		'docker-up     Start the development stack' \
@@ -30,6 +32,12 @@ lint:
 
 start:
 	bun run start
+
+cli:
+	bun run cli --help
+
+cron:
+	bun run cron cleanup
 
 db-generate:
 	bun run db:generate

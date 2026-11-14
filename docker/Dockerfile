@@ -3,7 +3,7 @@ FROM oven/bun:1.2.21-alpine AS build
 WORKDIR /app
 
 COPY package.json bun.lock ./
-COPY src/web/package.json ./src/web/package.json
+COPY web/package.json ./web/package.json
 RUN bun install --frozen-lockfile
 
 COPY . .
@@ -16,7 +16,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/drizzle ./drizzle
 
 EXPOSE 3000
 
-CMD ["bun", "run", "dist/index.js"]
+ENTRYPOINT ["bun", "run", "dist/index.js"]
+CMD ["serve"]

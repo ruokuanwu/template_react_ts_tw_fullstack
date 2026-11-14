@@ -6,14 +6,14 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  envDir: path.resolve(__dirname, "../.."),
+  envDir: path.resolve(__dirname, ".."),
   plugins: [
     tanstackRouter({ target: "react", autoCodeSplitting: true }),
     react(),
     tailwindcss(),
   ],
   build: {
-    outDir: "../../dist/web",
+    outDir: "../dist/web",
     emptyOutDir: true,
   },
   resolve: {
