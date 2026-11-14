@@ -1,8 +1,7 @@
 import { Elysia } from "elysia";
 import { staticPlugin } from "@elysiajs/static";
-import { authService } from "../module/auth";
+import { authModule } from "../module/auth";
 import { helloModule } from "../module/hello";
-import { corsMiddleware } from "../middleware/cors";
 import { dbMiddleware } from "../middleware/db";
 import { contextMiddleware } from "../middleware/context";
 import { config } from '../config'
@@ -16,10 +15,9 @@ export const createApp = () =>
   new Elysia()
     .group("/api", (app) =>
       app
-        .use(corsMiddleware)
         .use(contextMiddleware)
         .use(dbMiddleware)
-        .use(authService)
+        .use(authModule)
         .use(helloModule),
     )
     .use(
