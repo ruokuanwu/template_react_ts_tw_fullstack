@@ -2,9 +2,11 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { db } from "../../db";
 import * as schema from "../../db/schema";
+import { config } from "../../config";
 
-export const authService = betterAuth({
+export const auth = betterAuth({
   appName: "Fullstack Template",
+  baseURL: config.baseUrl,
   database: drizzleAdapter(db, {
     provider: "sqlite",
     schema,

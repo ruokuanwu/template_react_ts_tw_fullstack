@@ -17,6 +17,7 @@
     "build:web": "bun run --filter @template/web build",
     "cli": "bun run cmd/index.ts",
     "cron": "bun run cmd/index.ts cron",
+    "auth:generate": "bun x --bun auth@1.7.2 generate --config ./internal/module/auth/service.ts --output ./internal/db/schema/auth.ts --yes",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "bun run cmd/index.ts migrate",
     "lint": "bun run lint:server && bun run lint:web",
