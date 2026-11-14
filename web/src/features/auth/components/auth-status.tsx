@@ -1,11 +1,16 @@
 import { LogOut, UserRound } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { signOut } from "../api";
 import { useAuth } from "../hooks/use-auth";
 
 export function AuthStatus() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
   const { user, isPending } = useAuth();
 
   if (isPending) {
@@ -19,8 +24,19 @@ export function AuthStatus() {
   }
 
   const handleSignOut = async () => {
-    await signOut();
-    await navigate({ to: "/login" });
+    setIsSigningOut(true);
+    setSignOutError(null);
+    try {
+      const { error } = await signOut();
+      if (error) throw new Error('退出失败，请重试');
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      await navigate('/login', { replace: true });
+    } catch {
+      setSignOutError('退出失败，请重试');
+    } finally {
+      setIsSigningOut(false);
+    }
   };
 
   return (
@@ -34,11 +50,13 @@ export function AuthStatus() {
         variant="ghost"
         size="icon"
         onClick={handleSignOut}
+        disabled={isSigningOut}
         title="退出登录"
       >
         <LogOut className="size-4" />
         <span className="sr-only">退出登录</span>
       </Button>
+      {signOutError && <span role="alert" className="text-sm text-red-600">{signOutError}</span>}
     </div>
   );
 }

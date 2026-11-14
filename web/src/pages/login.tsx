@@ -1,4 +1,3 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,11 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-export const Route = createFileRoute('/login')({
-  component: LoginRoute,
-})
-
-function LoginRoute() {
+export function LoginPage() {
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader>

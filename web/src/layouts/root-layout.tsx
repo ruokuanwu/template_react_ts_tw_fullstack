@@ -1,16 +1,10 @@
-import {
-  Outlet,
-  createRootRoute,
-  useRouterState,
-} from "@tanstack/react-router";
+import { Outlet, useLocation } from "react-router";
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { APP_NAME, NAVIGATION_ITEMS } from "@/lib/constants";
 
-function RootLayout() {
-  const pathname = useRouterState({
-    select: (state) => state.location.pathname,
-  });
+export function RootLayout() {
+  const { pathname } = useLocation();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -31,6 +25,3 @@ function RootLayout() {
   );
 }
 
-export const Route = createRootRoute({
-  component: RootLayout,
-});
