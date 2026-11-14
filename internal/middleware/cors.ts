@@ -1,7 +1,7 @@
 import { cors } from "@elysiajs/cors";
 import { config } from "../config";
 
-export const corsPlugin = cors({
+export const corsMiddleware = cors({
   origin: config.clientUrl,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

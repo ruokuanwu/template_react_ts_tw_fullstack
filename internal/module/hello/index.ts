@@ -1,9 +1,9 @@
 import { Elysia } from 'elysia'
 import type { RequestContext } from '../../pkg/request-context'
-import { loggerPlugin } from '../../middleware/logger'
+import { loggerMiddleware } from '../../middleware/logger'
 
-export const helloRoute = new Elysia()
-    .use(loggerPlugin)
+export const helloModule = new Elysia()
+    .use(loggerMiddleware)
     .get('/hello', ({ reqLogger }) => {
         const context: RequestContext = { logger: reqLogger }
         context.logger.info('Handling hello request')

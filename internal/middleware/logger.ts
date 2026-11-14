@@ -1,9 +1,9 @@
 import { Elysia } from 'elysia'
 import { logger } from '../pkg/logger'
-import { requestIdPlugin } from './request-id'
+import { requestIdMiddleware } from './request-id'
 
-export const loggerPlugin = new Elysia({ name: 'logger' })
-    .use(requestIdPlugin)
+export const loggerMiddleware = new Elysia({ name: 'logger' })
+    .use(requestIdMiddleware)
     .derive(({ requestId }) => ({
         reqLogger: logger.child({ requestId }),
     }))

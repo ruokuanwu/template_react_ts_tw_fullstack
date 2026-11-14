@@ -1,10 +1,10 @@
 import { Elysia } from "elysia";
 import { staticPlugin } from "@elysiajs/static";
-import { authModule } from "../modules/auth";
-import { helloRoute } from "../modules/hello";
-import { corsPlugin } from "../middleware/cors";
-import { dbPlugin } from "../middleware/db";
-import { loggerPlugin } from "../middleware/logger";
+import { authModule } from "../module/auth";
+import { helloModule } from "../module/hello";
+import { corsMiddleware } from "../middleware/cors";
+import { dbMiddleware } from "../middleware/db";
+import { loggerMiddleware } from "../middleware/logger";
 import { config } from '../config'
 import { client } from '../db'
 import { logger } from '../pkg/logger'
@@ -16,11 +16,11 @@ export const createApp = () =>
   new Elysia()
     .group("/api", (app) =>
       app
-        .use(corsPlugin)
-        .use(loggerPlugin)
-        .use(dbPlugin)
+        .use(corsMiddleware)
+        .use(loggerMiddleware)
+        .use(dbMiddleware)
         .use(authModule)
-        .use(helloRoute),
+        .use(helloModule),
     )
     .use(
       staticPlugin({
