@@ -64,8 +64,9 @@ describe('contextMiddleware', () => {
 
             expect(response.status).toBe(200)
             expect(body).toEqual({
+                code: 0,
                 message,
-                timestamp: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/),
+                data: { timestamp: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/) },
             })
         }
     })

@@ -1,9 +1,13 @@
 import { Elysia } from "elysia";
 import { staticPlugin } from "@elysiajs/static";
+import { openapi } from "@elysiajs/openapi";
 import { authModule } from "../module/auth";
+import { getAuthDocumentation } from "../module/auth/openapi";
 import { helloModule } from "../module/hello";
 import { dbMiddleware } from "../middleware/db";
 import { contextMiddleware } from "../middleware/context";
+import { responseMiddleware } from "../middleware/response";
+import { failure } from "../pkg/response";
 import { config } from '../config'
 import { client } from '../db'
 import { Logger } from '../pkg/logger'
@@ -13,12 +17,37 @@ const webIndexPath = `${webDistPath}/index.html`;
 
 export const createApp = () =>
   new Elysia()
+    .use(
+      async () => new Elysia().use(openapi({
+        // enabled: config.debug,
+        path: "/swagger",
+        provider: "swagger-ui",
+        exclude: { paths: ["/*"] },
+        documentation: {
+          ...await getAuthDocumentation(),
+          info: { title: "Fullstack Template API", version: "1.0.0" },
+          tags: [
+            { name: "Hello", description: "Greeting endpoints" },
+            { name: "Auth", description: "Authentication and session endpoints" },
+          ],
+        },
+      })),
+    )
     .group("/api", (app) =>
       app
+        .use(responseMiddleware)
         .use(contextMiddleware)
         .use(dbMiddleware)
         .use(authModule)
-        .use(helloModule),
+        .use(helloModule)
+        .get("/*", ({ set }) => {
+          set.status = 404;
+          return failure(404, "API endpoint not found");
+        }, { detail: { hide: true } })
+        .all("/*", ({ set }) => {
+          set.status = 404;
+          return failure(404, "API endpoint not found");
+        }, { detail: { hide: true } }),
     )
     .use(
       staticPlugin({
