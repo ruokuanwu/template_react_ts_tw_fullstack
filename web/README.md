@@ -31,7 +31,9 @@ URL 参数 schema 就近放在页面路由文件，通过 `validateSearch` 校�
 
 首页 `/` 是参考根目录 `linear.design.md` 实现的原创 Orbit 产品落地页：近黑画布、灰阶面板、细线边框与少量薰衣草蓝强调色。采用系统字体，不加载外部字体、图片或 Linear 的品牌素材。
 
-`src/components/layout/landing-page.tsx` 负责导航、产品交互演示、功能介绍和行动入口，配套样式限定在 `.orbit-landing` 下。根布局仅对首页跳过原有应用导航、侧栏及提示条，登录与仪表盘继续使用原布局。产品演示使用本地模拟数据，支持状态筛选和标题搜索，不调用后端，也不代表真实项目管理功能。
+`src/routes/index.tsx` 定义首页组件，直接编排首屏、产品理念、功能区、工作流程、行动入口和页脚。页面专属模块放在 `src/features/landing/components/`：`landing-header.tsx` 管理移动导航，`product-preview.tsx` 管理产品演示与筛选搜索，`feature-section.tsx` 展示功能卡片，`brand.tsx` 在这些区块间共享品牌标记。配套样式位于 `src/features/landing/landing.css`，限定在 `.orbit-landing` 下；通用 `components/layout` 不承载落地页内容。
+
+根布局仅对首页跳过原有应用导航、侧栏及提示条，登录与仪表盘继续使用原布局。产品演示使用本地模拟数据，支持状态筛选和标题搜索，不调用后端，也不代表真实项目管理功能。
 
 “开始使用”进入已有仪表盘，未登录时仍由现有守卫跳转登录；登录页仍是占位页，不新增注册或认证流程。移动导航支持展开、收起和锚点跳转。自动回归包含首页布局与链接检查，交互及响应式可在开发服务中检查。
 
