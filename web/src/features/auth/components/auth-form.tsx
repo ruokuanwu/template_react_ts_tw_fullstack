@@ -29,7 +29,7 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
       if (result.error) throw new Error(result.error.message || "Unable to authenticate. Please try again.");
       return result.data;
     },
-    onSuccess: async () => { await navigate({ to: "/demo" }); },
+    onSuccess: async () => { await navigate({ to: "/dashboard" }); },
   });
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

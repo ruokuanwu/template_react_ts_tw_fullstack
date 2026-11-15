@@ -1,0 +1,24 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowRight, ArrowUpRight, Check, Circle, CircleDashed, Layers, Settings } from "lucide-react";
+import { demoIssuesOptions } from "@/features/landing/demo-data";
+
+export const Route = createFileRoute("/dashboard/")({ component: DashboardPage });
+
+function DashboardPage() {
+  const { authenticatedSession: session } = Route.useRouteContext();
+  const { data: issues = [], isPending, isError, refetch } = useQuery(demoIssuesOptions);
+  const done = issues.filter((issue) => issue.status === "Done").length;
+  const inProgress = issues.filter((issue) => issue.status === "In progress").length;
+  const progress = issues.length ? Math.round(done / issues.length * 100) : 0;
+  return <>
+    <p className="eyebrow">YOUR SPACE TO MAKE THINGS HAPPEN</p>
+    <div className="mb-9 flex flex-wrap items-end justify-between gap-5"><div><h1 className="text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Welcome back, {session?.user.name.split(" ")[0]}.</h1><p className="mt-3 text-sm leading-6 text-muted-foreground">A little clarity for your day. Here’s the bigger picture.</p></div><Link to="/demo" className="button-secondary !text-xs">Open interactive demo <ArrowUpRight size={14} /></Link></div>
+    <div className="mb-7 rounded-lg border border-border bg-muted px-4 py-3 text-xs leading-6 text-muted-foreground">Sample workspace · The overview below uses demo data, not your personal projects.</div>
+    {isPending ? <p role="status">Loading overview…</p> : isError ? <p role="alert">Unable to load the overview. <button className="underline" onClick={() => void refetch()}>Try again</button></p> : <>
+      <div className="mb-8 grid gap-4 sm:grid-cols-3">{[{label:"Total issues",value:issues.length,icon:Layers,note:"Small steps, shared direction"},{label:"In progress",value:inProgress,icon:CircleDashed,note:"Good things are taking shape"},{label:"Completed",value:done,icon:Check,note:"A little closer to the finish line"}].map(({label,value,icon:Icon,note}) => <section key={label} className="rounded-xl border border-border bg-surface p-5"><div className="flex items-center justify-between text-xs text-muted-foreground">{label}<Icon size={16} /></div><p className="my-4 text-3xl font-medium tracking-tight">{value}</p><p className="text-[11px] text-muted-foreground">{note}</p></section>)}</div>
+      <div className="grid items-start gap-6 xl:grid-cols-[1.7fr_1fr]"><section className="min-w-0 overflow-hidden rounded-xl border border-border bg-surface"><div className="flex items-center justify-between border-b border-border p-5"><div><h2 className="text-sm font-medium">Current cycle</h2><p className="mt-1 text-[11px] text-muted-foreground">The details that move things forward.</p></div><span className="rounded-full border border-border px-2 py-1 text-[10px] text-muted-foreground">{issues.length} issues</span></div><ul>{issues.map((issue) => <li key={issue.id} className="flex items-center gap-3 border-b border-border px-5 py-4 last:border-0">{issue.status === "Done" ? <Check size={15} className="shrink-0 text-muted-foreground" /> : issue.status === "In progress" ? <CircleDashed size={15} className="shrink-0 text-primary" /> : <Circle size={15} className="shrink-0 text-muted-foreground" />}<span className="min-w-0 flex-1"><span className="block truncate text-xs">{issue.title}</span><span className="mt-1 block text-[10px] text-muted-foreground">{issue.id} · {issue.label}</span></span><span className="hidden text-[10px] text-muted-foreground sm:block">{issue.status}</span></li>)}</ul></section>
+      <div className="space-y-6"><section className="rounded-xl border border-border bg-surface p-6"><p className="text-xs text-muted-foreground">This cycle’s momentum</p><div className="my-5 flex items-baseline gap-2"><span className="text-4xl font-medium tracking-tight">{progress}%</span><span className="text-xs text-muted-foreground">complete</span></div><div role="progressbar" aria-label="Completed sample issues" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} className="h-1.5 overflow-hidden rounded-full bg-accent"><div style={{width:`${progress}%`}} className="h-full rounded-full bg-primary" /></div><p className="mt-4 text-xs leading-6 text-muted-foreground">{done} of {issues.length} issues complete. Every small step counts.</p></section><section className="rounded-xl border border-border bg-surface p-6"><Settings size={20} className="mb-4 text-primary" /><h2 className="text-sm font-medium">Make yourself at home.</h2><p className="my-3 text-xs leading-6 text-muted-foreground">Light or dark? Set the mood for your workspace in appearance settings.</p><Link to="/dashboard/settings" className="inline-flex items-center gap-2 text-xs text-primary">Personalize your space <ArrowRight size={13} /></Link></section></div></div>
+    </>}
+  </>;
+}

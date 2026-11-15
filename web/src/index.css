@@ -55,6 +55,29 @@
 }
 
 @layer components {
+  .dashboard-theme {
+    color-scheme: dark;
+  }
+  .dashboard-theme[data-dashboard-theme="light"] {
+    color-scheme: light;
+    --color-canvas: #fafafa;
+    --color-surface: #ffffff;
+    --color-secondary: #eff0f3;
+    --color-secondary-foreground: #191b22;
+    --color-muted: #f2f3f5;
+    --color-muted-foreground: #656b76;
+    --color-accent: #eceef2;
+    --color-accent-foreground: #191b22;
+    --color-border: #dfe1e6;
+    --color-input: #dfe1e6;
+    --color-destructive: #c32f3c;
+  }
+  .dashboard-nav {
+    @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-secondary-foreground;
+  }
+  .dashboard-nav-active {
+    @apply bg-accent font-medium text-secondary-foreground;
+  }
   .page-container {
     @apply mx-auto w-full max-w-[1120px] px-6;
   }

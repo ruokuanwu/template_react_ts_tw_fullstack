@@ -16,7 +16,7 @@ export function AccountMenu({ onNavigate }: { onNavigate: () => void }) {
 
   return <div className="relative flex items-center gap-3 sm:gap-5">
     {session ? <>
-      <Link to="/demo" onClick={onNavigate} className="max-w-24 truncate text-xs text-muted-foreground hover:text-white sm:max-w-36" title={session.user.email}>{session.user.name}</Link>
+      <Link to="/dashboard" onClick={onNavigate} className="max-w-24 truncate text-xs text-muted-foreground hover:text-white sm:max-w-36" title={session.user.email}>{session.user.name}</Link>
       <button onClick={() => logout.mutate()} disabled={logout.isPending} className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-white disabled:opacity-50">{logout.isPending ? <Loader2 size={14} className="animate-spin" /> : <LogOut size={14} />}<span>Log out</span></button>
     </> : <>
       <Link to="/login" onClick={onNavigate} className="text-xs text-muted-foreground hover:text-white">Log in</Link>
