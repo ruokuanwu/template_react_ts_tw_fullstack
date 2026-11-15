@@ -19,7 +19,7 @@ export const createApp = () =>
   new Elysia()
     .use(
       async () => new Elysia().use(openapi({
-        // enabled: config.debug,
+        enabled: config.debug,
         path: "/swagger",
         provider: "swagger-ui",
         exclude: { paths: ["/*"] },
