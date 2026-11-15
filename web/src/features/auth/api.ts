@@ -18,3 +18,5 @@ export const signUp = (payload: SignUpPayload) =>
 export const signOut = () => authClient.signOut()
 
 export const getSession = () => authClient.getSession()
+
+export const refreshSession = () => authClient.getSession({ query: { disableCookieCache: true } })

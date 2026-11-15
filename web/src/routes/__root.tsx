@@ -14,7 +14,7 @@ export const Route = createRootRoute({
 function RootLayout() {
   const { pathname } = useLocation();
 
-  if (pathname === '/') return <Outlet />;
+  if (['/', '/login', '/register'].includes(pathname.replace(/\/+$/, '') || '/')) return <Outlet />;
 
   return (
     <div className="min-h-screen bg-slate-50">

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, spyOn, test } from 'bun:test'
+import { afterEach, beforeEach, describe, expect, spyOn, test } from 'bun:test'
 import { QueryClient } from '@tanstack/react-query'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -16,8 +16,14 @@ const authenticatedSession = {
 }
 
 const originalFetch = globalThis.fetch
+let defaultSession: ReturnType<typeof spyOn<typeof authApi, 'getSession'>>
+
+beforeEach(() => {
+  defaultSession = spyOn(authApi, 'getSession').mockResolvedValue({ data: null, error: null })
+})
 
 afterEach(() => {
+  defaultSession.mockRestore()
   globalThis.fetch = originalFetch
 })
 
@@ -51,6 +57,60 @@ describe('router migration', () => {
       client.clear()
       router.clearCache()
     }
+  })
+
+  test('renders standalone login and registration forms with safe continuation links', async () => {
+    for (const [path, heading, autocomplete] of [
+      ['/login', '欢迎回到 Orbit', 'current-password'],
+      ['/register', '创建 Orbit 账户', 'new-password'],
+    ]) {
+      const router = testRouter(`${path}?returnTo=${encodeURIComponent('/dashboard?view=users')}`)
+      const client = new QueryClient()
+      try {
+        await router.load()
+        const html = renderToStaticMarkup(createElement(QueryClientProvider, { client }, createElement(RouterProvider, { router })))
+        expect(html).toContain(heading)
+        expect(html).toContain('name="email"')
+        expect(html).toContain(`autoComplete="${autocomplete}"`)
+        expect(html).toContain('returnTo=')
+        expect(html).not.toContain('当前应用：')
+        expect(html).not.toContain('输入框占位')
+        if (path === '/register') {
+          expect(html).toContain('name="name"')
+          expect(html).toContain('name="confirmPassword"')
+        }
+      } finally {
+        client.clear()
+        router.clearCache()
+      }
+    }
+  })
+
+  test('redirects authenticated visitors away from both authentication pages', async () => {
+    defaultSession.mockResolvedValue({ data: authenticatedSession, error: null })
+    for (const path of ['/login', '/register']) {
+      const router = testRouter(`${path}?returnTo=${encodeURIComponent('/dashboard?view=users')}`)
+      await router.load()
+      expect(router.state.location.pathname).toBe('/dashboard')
+      expect(router.state.location.search.view).toBe('users')
+    }
+  })
+
+  test('reports session outages on authentication pages instead of rendering a logged-out form', async () => {
+    defaultSession.mockResolvedValue({ data: null, error: { status: 503, statusText: 'Unavailable', message: 'Unavailable' } })
+    for (const path of ['/login', '/register']) {
+      const router = testRouter(path)
+      await router.load()
+      expect(router.state.matches.find((match) => match.status === 'error')?.error).toMatchObject({ status: 503 })
+      expect(router.state.location.pathname).toBe(path)
+    }
+  })
+
+  test('uses the dashboard when an authenticated visitor supplies an unsafe return target', async () => {
+    defaultSession.mockResolvedValue({ data: authenticatedSession, error: null })
+    const router = testRouter('/register?returnTo=https%3A%2F%2Fexample.com')
+    await router.load()
+    expect(router.state.location.pathname).toBe('/dashboard')
   })
 
   test('preserves valid search values and defaults invalid values', async () => {
