@@ -73,7 +73,6 @@ export function DashboardLayout() {
           <p className="mb-3 px-3 text-[10px] font-medium tracking-widest text-muted-foreground">YOUR WORKSPACE</p>
           <nav aria-label="Workspace navigation" className="space-y-1">
             <Link to="/dashboard" activeOptions={{ exact: true }} onClick={closeNavigation} className="dashboard-nav" activeProps={{ className: "dashboard-nav-active" }}><LayoutDashboard size={17} /> Overview</Link>
-            <Link to="/dashboard/settings" onClick={closeNavigation} className="dashboard-nav" activeProps={{ className: "dashboard-nav-active" }}><Settings size={17} /> Settings</Link>
           </nav>
           <div className="mt-8 rounded-xl border border-border bg-muted p-4"><Orbit size={21} className="mb-3 text-primary" /><p className="text-xs font-medium">A little more momentum.</p><p className="mt-2 text-[11px] leading-5 text-muted-foreground">Make space for your next big idea. Start with one small step.</p><Link to="/demo" className="mt-4 inline-flex items-center gap-1 text-[11px] text-primary">Explore the demo <ArrowUpRight size={12} /></Link></div>
           <div ref={menuRef} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false); }} className="relative mt-auto border-t border-border pt-4">
