@@ -7,6 +7,7 @@ import { config } from "../../config";
 export const auth = betterAuth({
   appName: "Fullstack Template",
   baseURL: config.baseUrl,
+  trustedOrigins: config.clientUrl ? [config.clientUrl] : [],
   database: drizzleAdapter(db, {
     provider: "sqlite",
     schema,
