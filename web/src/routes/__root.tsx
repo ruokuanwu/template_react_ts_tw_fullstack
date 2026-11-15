@@ -1,9 +1,17 @@
-import { Outlet, useLocation } from "react-router";
+import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
+import { RouteErrorPage } from '@/components/layout/route-error';
+import { NotFoundPage } from '@/components/layout/not-found';
 import { Header } from "@/components/layout/header";
 import { Sidebar } from "@/components/layout/sidebar";
 import { APP_NAME, NAVIGATION_ITEMS } from "@/lib/constants";
 
-export function RootLayout() {
+export const Route = createRootRoute({
+  component: RootLayout,
+  errorComponent: RouteErrorPage,
+  notFoundComponent: NotFoundPage,
+});
+
+function RootLayout() {
   const { pathname } = useLocation();
 
   return (

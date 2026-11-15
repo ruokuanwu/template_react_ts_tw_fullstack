@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -8,7 +8,9 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-export function HomePage() {
+export const Route = createFileRoute('/')({ component: HomePage })
+
+function HomePage() {
   return (
     <section className="space-y-6">
       <div className="rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 p-8 text-white shadow-lg">
@@ -18,7 +20,7 @@ export function HomePage() {
           这里演示常见目录分层：路由配置、页面、业务模块、通用组件、hooks、工具库、类型与静态资源。
         </p>
         <Button className="mt-6" variant="secondary" asChild>
-          <Link to="/dashboard?view=summary">
+          <Link to="/dashboard" search={{ view: 'summary' }}>
             查看仪表盘
           </Link>
         </Button>

@@ -1,6 +1,6 @@
 import { LogOut, UserRound } from "lucide-react";
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { signOut } from "../api";
@@ -8,6 +8,7 @@ import { useAuth } from "../hooks/use-auth";
 
 export function AuthStatus() {
   const navigate = useNavigate();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState<string | null>(null);
@@ -31,7 +32,9 @@ export function AuthStatus() {
       if (error) throw new Error('退出失败，请重试');
       await queryClient.cancelQueries();
       queryClient.clear();
-      await navigate('/login', { replace: true });
+      router.clearCache();
+      await navigate({ to: '/login', search: {}, replace: true });
+      await router.invalidate();
     } catch {
       setSignOutError('退出失败，请重试');
     } finally {

@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -8,7 +10,19 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-export function LoginPage() {
+const loginSearchSchema = z.object({
+  returnTo: z.string().refine((value) => {
+    if (!value.startsWith('/') || value.includes('\\') || [...value].some((char) => char.charCodeAt(0) <= 32 || char.charCodeAt(0) === 127)) return false
+    return new URL(value, 'https://app.local').origin === 'https://app.local'
+  }).optional().catch(undefined),
+})
+
+export const Route = createFileRoute('/login')({
+  validateSearch: loginSearchSchema,
+  component: LoginPage,
+})
+
+function LoginPage() {
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader>

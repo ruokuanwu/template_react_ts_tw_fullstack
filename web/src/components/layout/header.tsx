@@ -1,11 +1,12 @@
-import { Link } from "react-router";
+import { Link } from '@tanstack/react-router';
+import type { NAVIGATION_ITEMS } from '@/lib/constants';
 import { Button } from "@/components/ui/button";
 import { AuthStatus } from "@/features/auth/components/auth-status";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   routes: readonly {
-    path: string;
+    path: (typeof NAVIGATION_ITEMS)[number]['path'];
     label: string;
   }[];
   activePath: string;

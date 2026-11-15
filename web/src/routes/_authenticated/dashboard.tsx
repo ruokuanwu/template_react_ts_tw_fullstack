@@ -1,6 +1,6 @@
-import { useSearchParams } from 'react-router';
-import { useQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
+import { useQuery } from '@tanstack/react-query';
 import { helloQueryOptions } from '@/features/hello/queries';
 import {
   Card,
@@ -14,15 +14,19 @@ const dashboardSearchSchema = z.object({
   view: z.enum(['summary', 'users']).catch('summary'),
 });
 
+export const Route = createFileRoute('/_authenticated/dashboard')({
+  validateSearch: dashboardSearchSchema,
+  component: DashboardPage,
+});
+
 const stats = [
   { label: "页面", value: "3" },
   { label: "业务模块", value: "2" },
   { label: "UI 组件", value: "2" },
 ];
 
-export function DashboardPage() {
-  const [searchParams] = useSearchParams();
-  const { view } = dashboardSearchSchema.parse({ view: searchParams.get('view') });
+function DashboardPage() {
+  const { view } = Route.useSearch();
   const hello = useQuery(helloQueryOptions);
 
   return (
@@ -30,7 +34,7 @@ export function DashboardPage() {
       <div>
         <h2 className="text-3xl font-bold text-slate-950">仪表盘</h2>
         <p className="mt-2 text-muted-foreground">
-          这是一个最小示例页面，用于展示 React Router 与 TanStack Query。
+          这是一个最小示例页面，用于展示 TanStack Router 与 TanStack Query。
         </p>
         <p className="mt-2 text-sm text-muted-foreground">
           当前视图由 zod 校验 URL 搜索参数：
