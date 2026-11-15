@@ -32,6 +32,27 @@ function testRouter(url: string) {
 }
 
 describe('router migration', () => {
+  test('renders the standalone landing with product preview and working destinations', async () => {
+    const router = testRouter('/')
+    const client = new QueryClient()
+    try {
+      await router.load()
+      const html = renderToStaticMarkup(
+        createElement(QueryClientProvider, { client }, createElement(RouterProvider, { router })),
+      )
+      expect(html).toContain('成为下一个好产品。')
+      expect(html).toContain('Orbit 产品交互演示')
+      expect(html).toContain('aria-selected="true"')
+      expect(html).toContain('href="#features"')
+      expect(html).toContain('href="/dashboard?view=summary"')
+      expect(html).toContain('href="/login"')
+      expect(html).not.toContain('当前应用：')
+    } finally {
+      client.clear()
+      router.clearCache()
+    }
+  })
+
   test('preserves valid search values and defaults invalid values', async () => {
     const session = spyOn(authApi, 'getSession').mockResolvedValue({ data: authenticatedSession, error: null })
     try {

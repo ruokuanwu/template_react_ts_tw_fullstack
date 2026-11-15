@@ -14,6 +14,8 @@ export const Route = createRootRoute({
 function RootLayout() {
   const { pathname } = useLocation();
 
+  if (pathname === '/') return <Outlet />;
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Header routes={NAVIGATION_ITEMS} activePath={pathname} />
