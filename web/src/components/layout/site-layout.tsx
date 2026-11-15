@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Menu, Orbit, X } from "lucide-react";
+import { AccountMenu } from "@/features/auth/components/account-menu";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -17,8 +18,7 @@ export function SiteHeader() {
           <a href="/#questions" className="hover:text-white">Resources</a>
         </nav>
         <div className="flex items-center gap-5">
-          <Link to="/demo" className="hidden text-[13px] text-muted-foreground hover:text-white sm:block">Explore demo</Link>
-          <Link to="/demo" className="rounded-md bg-[#f7f8f8] px-3.5 py-2 text-xs font-semibold text-[#141516] hover:bg-white">Get started <span aria-hidden="true">↗</span></Link>
+          <AccountMenu onNavigate={() => setOpen(false)} />
           <button className="md:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}>{open ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
